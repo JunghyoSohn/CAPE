@@ -1,0 +1,79 @@
+general:
+  device: cuda:0
+  ordering_device: global  
+  pruning_device: global
+  dataset: SynER4 
+  norm: false
+  num_nodes: 10
+  num_samples: 2000
+  method: nonlinear      # "mixed", "linear", "nonlinear"
+  linear_sem_type: gauss # "gauss", "exp", "gumbel", "uniform", "logistic"
+  nonlinear_sem_type: gp # "gp", "gp-add", "mlp", "mim", "quadratic"
+  linear_rate: 0.0
+  manual_seed: false
+  random_seed: 42
+  runs: 10
+  scenarios:
+    name: vanilla # vanilla, confounded, measure_err, noniid, unfaithful, pnl, lingam
+    params:
+      p_linear: 0.2
+      noise_type: exp          # LiNGAM noise: mlp (non-Gaussian) | exp | gumbel | uniform | laplace | logistic | gauss
+      noise_weight_scale: 1.5  # MLP noise weight scale
+      alpha: 0.5               # autoregressive coefficient for noniid
+      rho: 0.2
+      gamma: 0.2
+      coef_range: [-1.0, 1.0]  # also used as fallback range for alpha if alpha not set
+      p_unfaithful: 0.25
+      exponent: 3.0
+
+ordering:
+  model: score  # options: cam, score, nogam, diffan, caps, scino
+  cam:
+    min_gain: 0.0001
+  score:
+    eta_G: 0.001
+    eta_H: 0.001
+  nogam:
+    n_crossval: 5
+    n_crossval: 5
+    ridge_alpha: 0.01
+    eta_G: 0.001
+  diffan:
+    masking: true
+    residue: false
+    epochs: 2000
+    batch_size: 1000
+    eval_batch_size: 1000
+    learning_rate: 0.001
+    n_votes: 3
+    early_stopping_wait: 1000
+  caps:
+    pre_pruning: true
+    add_edge: true
+    lambda1: 50.0
+    lambda2: 50.0
+  scino:
+    masking: true
+    residue: false
+    epochs: 2000
+    batch_size: 1000
+    eval_batch_size: 1000
+    learning_rate: 0.001
+    n_fourier_layers: 10
+    norm_type: batch
+    gamma: 5.0
+    n_votes: 3
+    early_stopping_wait: 1000
+
+pruning:
+  method: cape
+  cam:
+    cutoff: 0.001
+  cape-atomic:  
+    predictor: tabpfn 
+    calibration: platt
+  cape:
+    predictor: tabpfn # options:  RF, XGB, CAT, GBM, MITRA, TABPFN
+    calibration: platt
+    min_group_size: 2     
+    affinity_strategy: correlation  
