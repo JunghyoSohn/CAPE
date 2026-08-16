@@ -1,6 +1,6 @@
 # CAPE
 
-**Junghyo Sohn, Sujeong Song, Wootaek Jeong,  Yeajin Shon, and Heung-Il Suk, ``Context-Aware Pruning for Ordering-Based Causal Discovery,'' In Proceedings of the 35th ACM Conference on Information and Knowledge Management (CIKM), Rome, Italy, November 7‑11, 2026.**
+Junghyo Sohn, Sujeong Song, Wootaek Jeong,  Yeajin Shon, and Heung-Il Suk, "Context-Aware Pruning for Ordering-Based Causal Discovery," *In Proceedings of the 35th ACM Conference on Information and Knowledge Management (CIKM)*, Rome, Italy, November 7‑11, 2026.
 
 CAPE is a plug-in pruning method for ordering-based causal discovery. It evaluates each candidate parent together with its current co-parents and removes edges that do not provide enough predictive evidence.
 
