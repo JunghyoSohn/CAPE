@@ -1,7 +1,5 @@
 # CAPE
 
-### Official Implementation for CIKM 2026
-
 This repository contains the official implementation of **CAPE: Context-Aware Pruning for Ordering-Based Causal Discovery**.
 
 > Junghyo Sohn, Sujeong Song, Wootaek Jeong, Yeajin Shon, and Heung-Il Suk,  
