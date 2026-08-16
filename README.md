@@ -15,6 +15,39 @@ Supported ordering methods: `cam`, `score`, `nogam`, `diffan`, `caps`, `scino`
 
 Supported pruning methods: `cape`, `cape-atomic`, `cam`
 
+## Repository Structure
+
+```text
+.
+├── configs/
+│   └── default.yaml          # Default experiment configuration
+├── ordering/
+│   ├── cam.py                # CAM ordering
+│   ├── caps.py               # CaPS ordering
+│   ├── diffan.py             # DiffAN ordering
+│   ├── nogam.py              # NoGAM ordering
+│   ├── scino.py              # SciNO ordering
+│   └── score.py              # SCORE ordering
+├── pruning/
+│   ├── cape.py               # Hierarchical CAPE pruning
+│   ├── cape_atomic.py        # Edge-wise CAPE pruning
+│   ├── cam_pruning.py        # CAM pruning wrapper
+│   ├── pruning_R_files/      # R scripts for CAM pruning
+│   └── TabPFN/               # TabPFN dependency (added during setup)
+├── dag_simulation.py         # Synthetic DAG and data generation
+├── dataset.py                # Dataset loading and preprocessing
+├── main.py                   # Main experiment entry point
+├── model_runner.py           # Ordering and pruning method registry
+├── utils.py                  # Shared utility functions
+└── README.md
+```
+
+The following directories are not included by default:
+
+- `pruning/TabPFN/`: created when installing TabPFN
+- `Datasets/`: used for external datasets
+- `results/`: created automatically after running an experiment
+
 ## Installation
 
 Python 3.10 or later is required. A CUDA-capable GPU is recommended.
