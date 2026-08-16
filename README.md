@@ -1,3 +1,115 @@
-# CAPE-Submission-1992
+# CAPE
 
-This repository is for anonymous submission.
+**Context-Aware Pruning for Ordering-Based Causal Discovery**
+
+CAPE is a plug-in pruning method for ordering-based causal discovery. It evaluates each candidate parent together with its current co-parents and removes edges that do not provide enough predictive evidence.
+
+## Key Features
+
+- Context-aware edge scoring
+- Adaptive MDL-inspired pruning threshold
+- Hierarchical group pruning for faster inference
+- Compatible with multiple ordering methods and predictors
+
+Supported ordering methods: `cam`, `score`, `nogam`, `diffan`, `caps`, `scino`
+
+Supported pruning methods: `cape`, `cape-atomic`, `cam`
+
+## Installation
+
+Python 3.10 or later is required. A CUDA-capable GPU is recommended.
+
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+python -m pip install --upgrade pip
+python -m pip install numpy pandas scipy networkx pyyaml scikit-learn tqdm \
+    torch gcastle cdt pgmpy pygam
+```
+
+### TabPFN
+
+TabPFN is the default predictor used by CAPE.
+
+```bash
+git clone --branch v6.4.1 --depth 1 https://github.com/PriorLabs/TabPFN.git pruning/TabPFN
+python -m pip install -e pruning/TabPFN
+```
+
+Place the TabPFN v2.5 regressor checkpoint at:
+
+```text
+pruning/TabPFN/checkpoints/tabpfn-v2.5-regressor-v2.5_default.ckpt
+```
+
+### R Dependencies
+
+The evaluation code uses the R package `SID`:
+
+```r
+install.packages("BiocManager")
+BiocManager::install("SID")
+```
+
+The `cam` pruning baseline additionally requires `mgcv`:
+
+```r
+install.packages("mgcv")
+```
+
+## Running an Experiment
+
+Edit `configs/default.yaml`, then run the following command from the repository root:
+
+```bash
+python main.py --config configs/default.yaml
+```
+
+The main configuration options are:
+
+```yaml
+general:
+  device: cuda:0
+  dataset: SynER4
+  num_nodes: 10
+  num_samples: 2000
+  runs: 10
+
+ordering:
+  model: score
+
+pruning:
+  method: cape
+  cape:
+    predictor: tabpfn
+```
+
+## Datasets
+
+Available synthetic datasets:
+
+- `SynER{k}`: Erdős-Rényi graph
+- `SynSF{k}`: Scale-Free graph
+
+The code also supports:
+
+- `sachs`
+- `magic-niab`
+- `magic-irri`
+- `physics`
+
+The Physics dataset must be placed under:
+
+```text
+Datasets/physics_generation/
+```
+
+## Results
+
+Results are saved automatically under `results/`.
+
+Each result directory contains:
+
+- Experiment configuration
+- Console output log
+- Evaluation metrics in CSV format
